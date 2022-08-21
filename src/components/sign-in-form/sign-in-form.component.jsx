@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { createAuthUserWithUsernameAndPassword, createUserDocumentFromAuth, signiInWithGooglePopup, signInAuthWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from '../form-input/form-input.component'
 import "./sign-in-form.styles.scss"
 import { getRedirectResult } from "@firebase/auth";
 import ButtonComponent from "../button-component/button.component";
+import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
     email:'',
@@ -13,6 +14,7 @@ const defaultFormFields = {
 const SignInForm = () =>{
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email, password} = formFields;
+    const {setCurrentUser} = useContext(UserContext);
 
     console.log(formFields);
     const handleChange = (event) =>{
@@ -46,8 +48,9 @@ const SignInForm = () =>{
         
         // const {email, password}= event.target;
         try{
-           const response = await signInAuthWithEmailAndPassword(email, password);
-           console.log(response);
+           const {user} = await signInAuthWithEmailAndPassword(email, password);
+           console.log(user);
+           setCurrentUser(user)
         }
         catch(error){
             switch(error.code){
