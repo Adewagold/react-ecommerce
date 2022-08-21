@@ -1,5 +1,5 @@
 import "../form-input/form-input.styles.scss"
-import "../form-input/button.styles.scss"
+
 
 const FormInput = ({label, ...otherProps}) =>{
     return(
