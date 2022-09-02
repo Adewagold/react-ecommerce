@@ -5,13 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './contexts/user.context';
+import { ProductsProvider } from './contexts/products.context';
+import { ToggleDropDownProvider } from './contexts/toggle-dropdown.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
     <BrowserRouter>
     <UserProvider>
+    <ToggleDropDownProvider>
+      <ProductsProvider>
       <App />
+      </ProductsProvider>
+      </ToggleDropDownProvider>
     </UserProvider>
     </BrowserRouter>
 
