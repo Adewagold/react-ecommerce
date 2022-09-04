@@ -1,14 +1,17 @@
 import "./cart-icon.styles.scss"
 import { useContext } from "react";
 import {ReactComponent as ShoppingBag} from "./shopping-bag.svg";
-import { ToggleDropDownContext } from "../../contexts/toggle-dropdown.context";
+import { CartContext } from "../../contexts/cart.context";
+
+
 const CardIcon = ()=>{
 
-    const {toggleDropDown, setToggleDropDown} = useContext(ToggleDropDownContext);
+    const {totalCartItems, toggleDropDown, setToggleDropDown} = useContext(CartContext);
     const toggleCartDropDown = () => setToggleDropDown(!toggleDropDown);
+    
     return(<div className="cart-icon-container">
         <ShoppingBag className="shopping-icom" onClick={toggleCartDropDown}/>
-        <span className="item-count">0</span>
+        <span className="item-count">{totalCartItems}</span>
         </div>)
 
 }

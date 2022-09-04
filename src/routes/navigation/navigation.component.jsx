@@ -9,7 +9,7 @@ import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import CardIcon from "../../components/cart-component/card-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-import { ToggleDropDownContext } from "../../contexts/toggle-dropdown.context";
+import { CartContext } from "../../contexts/cart.context";
 
 const Navigation = () =>{
     const {currentUser} = useContext(UserContext);
@@ -19,7 +19,7 @@ const Navigation = () =>{
     //      await signOutUser();
     //      setCurrentUser(null)
     // }
-    const {toggleDropDown}  = useContext(ToggleDropDownContext);
+    const {toggleDropDown}  = useContext(CartContext);
 
     return (
         <Fragment>
