@@ -32,12 +32,7 @@ const removeCartItem = (cartItems, cartItemToRemove) =>{
 }
 
 const deleteItemFromCart = (cartItems, itemToDelete)=>{
-    //check if item exists
-    const existingCartItem = cartItems.find((cartItem)=>cartItem.id === itemToDelete.id);
-
-    if(existingCartItem){
         return cartItems.filter(cartItem => cartItem.id !== itemToDelete.id);
-    }
 }
 
 export const CartContext = createContext({
@@ -47,7 +42,8 @@ export const CartContext = createContext({
     addItemToCart:()=>{},
     removeItemFromCart: ()=>{},
     clearCartItem: ()=>{},
-    totalCartItems:0
+    totalCartItems:0,
+    total:0
 });
 
 export const CartProvider = ({children}) =>{
@@ -55,10 +51,16 @@ export const CartProvider = ({children}) =>{
     const [toggleDropDown, setToggleDropDown] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalCartItems, setTotalCartItems] = useState(0);
+    const [total, setTotal] = useState(0);
 
     useEffect(()=>{
         const newCartCount = cartItems.reduce((total, cartItem)=>total+cartItem.quantity, 0)
         setTotalCartItems(newCartCount)
+    })
+
+    useEffect(()=>{
+        const newCartTotal = cartItems.reduce((total, cartItem)=>total+cartItem.quantity * cartItem.price,0)
+        setTotal(newCartTotal)
     })
 
     const addItemToCart =(productToAdd)=>{
@@ -73,7 +75,15 @@ export const CartProvider = ({children}) =>{
         setCartItems(deleteItemFromCart(cartItems, itemToDelete))
     }
 
-    const value={toggleDropDown, setToggleDropDown, addItemToCart, cartItems, totalCartItems, removeItemFromCart, clearCartItem};
+    const value={toggleDropDown, 
+        setToggleDropDown, 
+        addItemToCart, 
+        cartItems, 
+        totalCartItems, 
+        removeItemFromCart, 
+        clearCartItem,
+        total
+    };
     
     
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>
